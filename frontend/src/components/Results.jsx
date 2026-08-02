@@ -11,12 +11,47 @@ export function Results({ data }) {
   const [indiceArchivo, setIndiceArchivo] = useState(0);
   const payload = listadoArchivos[indiceArchivo] || listadoArchivos[0] || {};
 
-  // Mapeo flexible de claves (soporta múltiples nomenclaturas de API)
-  const estadisticas = payload.estadisticas || payload.estadisticas_descriptivas || payload.stats || {};
-  const correlaciones = payload.correlaciones || payload.matriz_correlacion || {};
-  const outliers = payload.outliers || payload.valores_atipicos || {};
-  const limpieza = payload.limpieza || payload.preprocesamiento || {};
-  const clustering = payload.clustering || payload.kmeans || {};
+  // Mapeo flexible de objetos principales (soporta múltiples nomenclaturas de API)
+  const estadisticas = payload.estadisticas || payload.estadisticas_descriptivas || payload.stats || payload.descriptiva || {};
+  const correlaciones = payload.correlaciones || payload.matriz_correlacion || payload.correlacion || {};
+  const outliers = payload.outliers || payload.valores_atipicos || payload.anomalias || {};
+  const limpieza = payload.limpieza || payload.preprocesamiento || payload.resumen_limpieza || payload.auditoria || {};
+  const clustering = payload.clustering || payload.kmeans || payload.segmentacion || {};
+
+  // Extracción flexible con múltiples fallbacks para resolver inconsistencias de claves
+  const nulosAtendidos = 
+    limpieza.nulos_atendidos ?? 
+    limpieza.valores_nulos ?? 
+    limpieza.nulos ?? 
+    limpieza.nulos_imputados ?? 
+    payload.nulos_atendidos ?? 
+    payload.nulos ?? 
+    payload.valores_nulos ?? 
+    0;
+
+  const duplicadosEliminados = 
+    limpieza.duplicados_eliminados ?? 
+    limpieza.duplicados ?? 
+    limpieza.filas_duplicadas ?? 
+    payload.duplicados_eliminados ?? 
+    payload.duplicados ?? 
+    payload.filas_duplicadas ?? 
+    0;
+
+  const nombreArchivo = 
+    payload.archivo || 
+    payload.nombre_archivo || 
+    payload.filename || 
+    payload.file || 
+    'datos_procesados.csv';
+
+  const resumenIA = 
+    payload.resumen_ia || 
+    payload.interpretacion_ia || 
+    payload.analisis_ia || 
+    payload.llm_summary || 
+    payload.resumen || 
+    "El modelo analizó la estructura del dataset y clasificó las muestras en grupos homogéneos.";
 
   const columnas = Object.keys(estadisticas);
 
@@ -39,7 +74,7 @@ export function Results({ data }) {
                 cursor: 'pointer'
               }}
             >
-              📄 {item.archivo || `Archivo ${idx + 1}`}
+              📄 {item.archivo || item.nombre_archivo || `Archivo ${idx + 1}`}
             </button>
           ))}
         </div>
@@ -49,7 +84,7 @@ export function Results({ data }) {
       <section className="dashboard-card">
         <div className="card-header">
           <span className="badge badge-blue">PROCESAMIENTO Y LIMPIEZA DE DATOS</span>
-          <h2>Auditoría de Ingesta: {payload.archivo || 'datos_prueba.csv'}</h2>
+          <h2>Auditoría de Ingesta: {nombreArchivo}</h2>
         </div>
 
         <div className="metrics-grid">
@@ -61,13 +96,13 @@ export function Results({ data }) {
 
           <div className="metric-box">
             <span className="metric-title">Valores Nulos Atendidos</span>
-            <span className="metric-value text-green">{limpieza.nulos_atendidos ?? 0}</span>
+            <span className="metric-value text-green">{nulosAtendidos}</span>
             <span className="metric-subtitle">Registros imputados</span>
           </div>
 
           <div className="metric-box">
             <span className="metric-title">Duplicados Eliminados</span>
-            <span className="metric-value text-green">{limpieza.duplicados_eliminados ?? 0}</span>
+            <span className="metric-value text-green">{duplicadosEliminados}</span>
             <span className="metric-subtitle">Filas depuradas</span>
           </div>
         </div>
@@ -195,11 +230,11 @@ export function Results({ data }) {
         <div className="metrics-grid" style={{ marginBottom: '20px' }}>
           <div className="metric-box">
             <span className="metric-title">Modelo Aplicado</span>
-            <span className="metric-value-text">{clustering.algoritmo || 'K-Means Algorithm'}</span>
+            <span className="metric-value-text">{clustering.algoritmo || clustering.modelo || 'K-Means Algorithm'}</span>
           </div>
           <div className="metric-box">
             <span className="metric-title">Clústeres Generados</span>
-            <span className="metric-value">{clustering.n_clusters ?? 3}</span>
+            <span className="metric-value">{clustering.n_clusters ?? clustering.clusters ?? clustering.k ?? 3}</span>
           </div>
         </div>
 
@@ -209,7 +244,7 @@ export function Results({ data }) {
             <strong>Interpretación del Modelo (Ollama LLM):</strong>
           </div>
           <p className="ai-text">
-            {payload.resumen_ia || "El modelo analizó la estructura del dataset y clasificó las muestras en grupos homogéneos."}
+            {resumenIA}
           </p>
         </div>
       </section>
