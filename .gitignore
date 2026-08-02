@@ -1,0 +1,144 @@
+# ==================================================
+# PYTHON - Entornos virtuales y caché
+# ==================================================
+
+venv/
+env/
+ENV/
+.venv/
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+.coverage
+htmlcov/
+
+
+# ==================================================
+# FASTAPI / SERVIDOR / LOGS
+# ==================================================
+
+*.log
+logs/
+uvicorn.log
+
+
+# ==================================================
+# VARIABLES DE ENTORNO Y SECRETOS
+# ==================================================
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+secrets/
+
+
+# ==================================================
+# NODE / REACT / VITE
+# ==================================================
+
+node_modules/
+
+dist/
+build/
+.vite/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+.cache/
+
+
+# ==================================================
+# DATA SCIENCE / MACHINE LEARNING
+# ==================================================
+
+.ipynb_checkpoints/
+
+*.pickle
+*.pkl
+*.joblib
+
+models/
+checkpoints/
+
+# Archivos grandes de datasets
+*.csv
+*.xlsx
+*.xls
+*.json
+
+# Si necesitas subir datasets de ejemplo:
+# crea una carpeta data/sample/
+
+
+# ==================================================
+# BASES DE DATOS LOCALES
+# ==================================================
+
+*.sqlite
+*.sqlite3
+*.db
+
+database/
+databases/
+
+
+# ==================================================
+# ARCHIVOS TEMPORALES
+# ==================================================
+
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+~$*
+
+
+# ==================================================
+# IDEs Y EDITORES
+# ==================================================
+
+.vscode/
+.idea/
+
+*.code-workspace
+
+
+# ==================================================
+# SISTEMA OPERATIVO
+# ==================================================
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+
+# ==================================================
+# ARCHIVOS DE CONFIGURACIÓN GENERADOS
+# ==================================================
+
+*.orig
+*.rej
+
+
+# ==================================================
+# FRONTEND ENV
+# ==================================================
+
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
