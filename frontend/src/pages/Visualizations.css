@@ -1,0 +1,186 @@
+/* ============================
+   GRID DE VISUALIZACIONES
+   ============================ */
+
+.visualizations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.visualization-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.visualization-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin: 0 0 16px 0;
+}
+
+/* ============================
+   CONTROLES COMUNES (SELECTS)
+   ============================ */
+
+.chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chart-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.chart-controls label {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.chart-controls select {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.chart-controls select:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
+
+.chart-empty {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 24px 0;
+}
+
+/* ============================
+   BOXPLOT
+   ============================ */
+
+.boxplot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.boxplot-card {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.boxplot-title {
+  margin: 0 0 12px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #38bdf8;
+}
+
+.boxplot-track {
+  position: relative;
+  height: 10px;
+  background: #1e293b;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+.boxplot-box {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: rgba(168, 85, 247, 0.6);
+  border-radius: 6px;
+}
+
+.boxplot-median {
+  position: absolute;
+  top: -3px;
+  width: 2px;
+  height: 16px;
+  background: #f8fafc;
+}
+
+.boxplot-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  margin-bottom: 10px;
+}
+
+.boxplot-stats strong {
+  color: #94a3b8;
+  font-weight: 600;
+  margin-right: 6px;
+  display: inline-block;
+  min-width: 64px;
+}
+
+.boxplot-outliers {
+  font-size: 0.78rem;
+  color: #f87171;
+  border-top: 1px solid #334155;
+  padding-top: 8px;
+}
+
+/* ============================
+   HEATMAP
+   ============================ */
+
+.heatmap-scroll {
+  overflow-x: auto;
+}
+
+.heatmap-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.75rem;
+}
+
+.heatmap-table th,
+.heatmap-table td {
+  padding: 8px 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.heatmap-table thead th {
+  color: #94a3b8;
+  font-weight: 600;
+  border-bottom: 1px solid #334155;
+}
+
+.heatmap-table tbody th {
+  color: #94a3b8;
+  font-weight: 600;
+  text-align: right;
+  border-right: 1px solid #334155;
+}
+
+.heatmap-table td {
+  color: #0f172a;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.heatmap-corner {
+  background: transparent;
+}

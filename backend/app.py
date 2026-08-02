@@ -5,6 +5,8 @@ import pandas as pd
 import numpy as np
 import io
 
+from services.visualizations import generate_visualizations
+
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
@@ -230,6 +232,16 @@ def analizar_dataframe(df: pd.DataFrame, nombre_archivo: str):
                 pass
 
     # --------------------
+    # VISUALIZACIONES
+    # --------------------
+
+    visualizations = generate_visualizations(
+        df,
+        columnas_numericas,
+        correlaciones
+    )
+
+    # --------------------
     # RESUMEN
     # --------------------
 
@@ -270,6 +282,8 @@ def analizar_dataframe(df: pd.DataFrame, nombre_archivo: str):
         "outliers": outliers,
 
         "clustering": clustering,
+
+        "visualizations": visualizations,
 
         "resumen_ia": resumen
 
