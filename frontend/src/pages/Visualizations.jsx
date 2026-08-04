@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import HistogramChart from "../components/charts/HistogramChart";
@@ -6,6 +6,8 @@ import BoxPlotChart from "../components/charts/BoxPlotChart";
 import ScatterPlotChart from "../components/charts/ScatterPlotChart";
 import HeatmapChart from "../components/charts/HeatmapChart";
 import DistributionChart from "../components/charts/DistributionChart";
+
+import { descargarReporte, descargarReportePDF } from "../services/reportGenerator";
 
 import "./Visualizations.css";
 
@@ -36,6 +38,24 @@ function Visualizations() {
 
     const visualizations = resultados[0].visualizations;
 
+    const [generandoPDF, setGenerandoPDF] = useState(false);
+
+    const exportarHTML = () => {
+        descargarReporte(resultados);
+    };
+
+    const exportarPDF = async () => {
+        setGenerandoPDF(true);
+        try {
+            await descargarReportePDF(resultados);
+        } catch (error) {
+            console.error("Error al generar el PDF:", error);
+            alert("Ocurrió un error generando el PDF. Revisa la consola para más detalles.");
+        } finally {
+            setGenerandoPDF(false);
+        }
+    };
+
     return (
 
         <div className="visualizations-page">
@@ -46,12 +66,31 @@ function Visualizations() {
 
             </h1>
 
-            <button
-                className="back-button"
-                onClick={() => navigate("/")}
-            >
-                ← Volver
-            </button>
+            <div className="visualizations-actions">
+
+                <button
+                    className="back-button"
+                    onClick={() => navigate("/")}
+                >
+                    ← Volver
+                </button>
+
+                <button
+                    className="export-button export-button-html"
+                    onClick={exportarHTML}
+                >
+                    🌐 Exportar HTML
+                </button>
+
+                <button
+                    className="export-button export-button-pdf"
+                    onClick={exportarPDF}
+                    disabled={generandoPDF}
+                >
+                    {generandoPDF ? "⏳ Generando PDF..." : "📄 Exportar PDF"}
+                </button>
+
+            </div>
 
             <div className="visualizations-grid">
 

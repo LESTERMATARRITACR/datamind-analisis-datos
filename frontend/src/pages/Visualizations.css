@@ -1,4 +1,29 @@
 /* ============================
+   ACCIONES (VOLVER / EXPORTAR)
+   ============================ */
+
+.visualizations-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.export-button {
+  background: linear-gradient(135deg, #0ea5e9, #22d3ee) !important;
+}
+
+.export-button-pdf {
+  background: linear-gradient(135deg, #f43f5e, #fb923c) !important;
+}
+
+.export-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ============================
    GRID DE VISUALIZACIONES
    ============================ */
 
