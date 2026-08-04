@@ -6,6 +6,7 @@ import numpy as np
 import io
 
 from services.visualizations import generate_visualizations
+from services.ai_insights import generar_insights_ia
 
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
@@ -254,7 +255,7 @@ def analizar_dataframe(df: pd.DataFrame, nombre_archivo: str):
         f"y se atendieron {nulos} valores nulos."
     )
 
-    return {
+    resultado = {
 
         "archivo": nombre_archivo,
 
@@ -288,6 +289,22 @@ def analizar_dataframe(df: pd.DataFrame, nombre_archivo: str):
         "resumen_ia": resumen
 
     }
+
+    # --------------------
+    # INTELIGENCIA ARTIFICIAL (Punto 6)
+    # Interpreta los resultados, genera insights automáticos y prioriza
+    # el hallazgo más importante. Usa Ollama si está disponible, y si no,
+    # cae en un generador basado en reglas (ver services/ai_insights.py).
+    # --------------------
+
+    insights_ia = generar_insights_ia(resultado)
+
+    resultado["interpretacion_ia"] = insights_ia["interpretacion"]
+    resultado["insights_ia"] = insights_ia["insights"]
+    resultado["hallazgo_prioritario_ia"] = insights_ia["hallazgo_prioritario"]
+    resultado["fuente_ia"] = insights_ia["fuente"]
+
+    return resultado
 
 # ----------------------------
 # Rutas 

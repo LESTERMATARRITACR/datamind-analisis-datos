@@ -45,13 +45,17 @@ export function Results({ data }) {
     payload.file || 
     'datos_procesados.csv';
 
-  const resumenIA = 
-    payload.resumen_ia || 
-    payload.interpretacion_ia || 
-    payload.analisis_ia || 
-    payload.llm_summary || 
-    payload.resumen || 
+  const interpretacionIA =
+    payload.interpretacion_ia ||
+    payload.resumen_ia ||
+    payload.analisis_ia ||
+    payload.llm_summary ||
+    payload.resumen ||
     "El modelo analizó la estructura del dataset y clasificó las muestras en grupos homogéneos.";
+
+  const insightsIA = payload.insights_ia || [];
+  const hallazgoPrioritarioIA = payload.hallazgo_prioritario_ia || "";
+  const fuenteIA = payload.fuente_ia; // "ollama" | "reglas"
 
   const columnas = Object.keys(estadisticas);
 
@@ -241,11 +245,32 @@ export function Results({ data }) {
         <div className="ai-insight-box">
           <div className="ai-header">
             <span className="ai-icon">🧠</span>
-            <strong>Interpretación del Modelo (Ollama LLM):</strong>
+            <strong>
+              Interpretación del Modelo{" "}
+              {fuenteIA === "ollama" ? "(Ollama LLM)" : "(motor de reglas, Ollama no disponible)"}:
+            </strong>
           </div>
           <p className="ai-text">
-            {resumenIA}
+            {interpretacionIA}
           </p>
+
+          {insightsIA.length > 0 && (
+            <>
+              <strong>Insights automáticos:</strong>
+              <ul className="ai-text">
+                {insightsIA.map((insight, idx) => (
+                  <li key={idx}>{insight}</li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {hallazgoPrioritarioIA && (
+            <>
+              <strong>🏆 Hallazgo prioritario:</strong>
+              <p className="ai-text">{hallazgoPrioritarioIA}</p>
+            </>
+          )}
         </div>
       </section>
 
